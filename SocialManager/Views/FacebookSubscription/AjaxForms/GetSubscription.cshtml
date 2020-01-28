@@ -1,0 +1,21 @@
+﻿@using (Ajax.BeginForm("Get", "FacebookSubscription", null,
+                        new AjaxOptions
+                        {
+                            OnFailure = "handleError(xhr,'ErrorMessageDiv')",
+                            HttpMethod = "Get",
+                            UpdateTargetId = "Subscription_ResponseDiv",
+                            LoadingElementId = "divWaitImage_Subscriptions",
+                            InsertionMode = InsertionMode.Replace
+                        },
+                        new
+                        {
+                            id = "Get_Subscriptions_Form",
+                            @class = "form",
+                            role = "form"
+                        }))
+{
+    <div id="divWaitImage_Subscriptions" style="display:none;" class="text-center">
+        <img src="~/images/loader.gif" />
+    </div>
+    <div id="Subscription_ResponseDiv"></div>
+}

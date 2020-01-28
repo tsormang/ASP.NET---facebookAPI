@@ -1,0 +1,42 @@
+﻿@model IEnumerable<SocialManager.Models.FacebookAlbumViewModel>
+@{
+    int idx = 0;
+}
+<div id="AlbumCarousel" class="carousel slide" data-interval="false" data-ride="carousel">
+    <!--Indicators-->
+    <ol class="carousel-indicators">
+        @foreach (var item in Model)
+        {
+            <li data-target="#AlbumCarousel" data-slide-to="@idx" class="@(idx == 0 ? "active" : "")">
+            </li>
+            idx++;
+        }
+    </ol>
+    <!-- Carousel items -->
+    <div class="carousel-inner text-center">
+        @{
+            idx = 0;
+            foreach (var item in Model)
+            {
+            <!-- Wrapper for slides -->
+                <div class="item @(idx==0 ?  "active" : "")">
+                    <div id="AlbumDiv_@item.Id">
+                        @Html.Partial("FB_Album_Response", item)
+                    </div>  
+                </div>
+                idx++;
+            }
+        }
+    </div>
+    <!-- Controls -->
+    <a class="carousel-control left" href="#AlbumCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left"></span>
+    </a>
+    <a class="carousel-control right" href="#AlbumCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+    <input id="FirstAlbumId" name="FirstAlbumId" type="hidden" value="@(Model.FirstOrDefault().Id)" />
+</div>
+
+
+

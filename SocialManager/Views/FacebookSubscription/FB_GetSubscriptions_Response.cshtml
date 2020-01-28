@@ -1,0 +1,41 @@
+﻿@using SocialManager.Models
+@model IEnumerable<FacebookSubscriptionViewModel>
+<div class="panel-group" id="accordian" role="tablist">
+    @foreach (FacebookSubscriptionViewModel subscription in Model)
+    {
+        <div class="panel panel-default">
+            <div class="panel-heading" role="tab" id="heading@(subscription.Type)">
+                <h4 class="panel-title">
+                    <button type="button"
+                            class="btn glyphicon glyphicon-trash btn-primary"
+                            onclick="DeleteSubscription('@subscription.Type')"></button>
+                    <a data-toggle="collapse" data-parent="#accordian" 
+                       href="#collapse@(subscription.Type)">
+                        @subscription.Type 
+                    </a>                   
+                </h4>               
+            </div>
+            <div id="collapse@(subscription.Type)" 
+                 class="panel-collapse collapse accordion-body"
+                 role="tabpanel">
+                <ul class="list-group">
+                    <li class="list-group-item text-success">
+                        @(subscription.active ? "Active" : "Not Active")
+                    </li>
+                    <li class="list-group-item word-wrap text-center">
+                        <span class="text-primary">Callback URL</span>
+                        <h6>@subscription.callback_url</h6>
+                    </li>
+                    <li class="list-group-item">
+                        <ul class="list-group">
+                            @foreach (string field in subscription.fields)
+                            {
+                                <li class="list-group-item">@field</li>
+                            }
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    }
+</div>

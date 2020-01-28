@@ -1,0 +1,47 @@
+﻿@model IEnumerable<SocialManager.Models.FacebookFriendViewModel>
+@{
+    ViewBag.Title = "FBInfo";
+}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                    </tr>
+                </table>
+                <div class="bodycontainer scrollable">
+                    <table class="table table-hover table-striped table-condensed table-scrollable">
+                        <tbody>
+                            @foreach (var item in Model.OrderBy(f=>f.Name))
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <input type="checkbox" id="@item.TaggingId" name="Chk_SelectTaggableFriend" data-friendname="@item.Name" data-imageurl="@item.ImageURL" />
+                                            </span>
+                                            <img src="@item.ImageURL" />&nbsp;@Html.DisplayFor(modelItem => item.Name)
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <table>
+                    <tfoot>
+                        @Model.Count() friends
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

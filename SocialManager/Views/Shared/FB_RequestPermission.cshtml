@@ -1,0 +1,51 @@
+﻿@using SocialManager.Models;
+@model PermissionRequestViewModel
+@{
+    ViewBag.Title = "FB_RequestPermission";
+}
+@using (Html.BeginForm(
+    "RequestPermissions", 
+    "Facebook", 
+    FormMethod.Post, 
+    new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <input type="hidden" name="redirectURI" value="@(Model.redirectURI)" />
+    <div class="row">
+        <div class="col-md-12">
+            <span class="text-info">In order to access the following features, 
+            Social Manager application need to request your approval for these 
+            permission item(s). Please select each permission that you will permit Social 
+            Manager access to:
+            </span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-1 col-md-8">
+            <ul class="list-group nav nav-list">
+                @for (int i = 0; i < Model.MissingPermissions.Count; i++ )
+                {
+                    <li class="list-group-item">
+                        <label class="checkbox">
+                            @Html.CheckBoxFor(x => x.MissingPermissions[i].requested)
+                            @Model.MissingPermissions[i].name
+                        </label>
+                        <span class="text-muted">
+                            @Model.MissingPermissions[i].description.
+                        </span>
+                        @Html.HiddenFor(x => x.MissingPermissions[i].permision_scope_value)
+                </li>
+                }
+            </ul>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" name="OkButton" class="btn btn-default" value="Ok" />
+            <input type="submit" name="CancelButton" class="btn" value="Cancel" />
+        </div>
+    </div>
+}
+
+

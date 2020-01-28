@@ -1,0 +1,16 @@
+﻿@using (Ajax.BeginForm("GetAlbums", "FacebookPhoto",
+            null,
+            new
+            {
+                id = "formGetAlbums"
+            }))
+{
+    <div id="divLoadingAlbums"
+         style="display:none; z-index:1000; position:absolute;
+                top:50%; left:50%; opacity:0.85;
+            -moz-opacity:0.85; filter:alpha(opacity=85); ">
+        <img src="~/images/loader.gif" />
+    </div>
+    <div id="Albums_Result">
+    </div>
+}

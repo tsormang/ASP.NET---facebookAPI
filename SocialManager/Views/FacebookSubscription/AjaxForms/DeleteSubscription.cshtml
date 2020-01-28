@@ -1,0 +1,17 @@
+﻿@using (Ajax.BeginForm("Delete", "FacebookSubscription", null,
+                        new AjaxOptions
+                        {
+                            OnFailure = "handleError(xhr,'ErrorMessageDiv')",
+                            HttpMethod = "Post",
+                            LoadingElementId = "divWaitImage_Subscriptions",
+                            OnSuccess = "$('#Get_Subscriptions_Form').submit()"
+                        },
+                        new
+                        {
+                            id = "Delete_Subscriptions_Form",
+                            @class = "form",
+                            role = "form"
+                        }))
+{
+    <input name="subscription_to_delete" type="hidden" />
+}

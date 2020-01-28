@@ -1,0 +1,67 @@
+﻿@using SocialManager.Models
+@model FacebookNotifyViewModel
+@foreach (FacebookNotify_Entry _entry in Model.entry)
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading" role="tab" id="notification@(Model.instanceId)">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" 
+                   data-parent="#accordian_notifications" 
+                   href="#collapse@(Model.instanceId)">
+                    @string.Format("{0} {1}", Model.Object, _entry.id)
+                </a>
+            </h4>
+        </div>
+        <div id="collapse@(Model.instanceId)" 
+             class="panel-collapse collapse accordian-body" 
+             role="tabpanel">
+            <div class="well-sm"> @string.Format("{0}", _entry.LocalTime)
+            @if (_entry.changes != null)
+            { 
+               foreach (var _change in _entry.changes)
+                {
+                    if (_change.value != null)
+                    {
+                        <div class="list-group-item-text">
+                             @string.Format("{0} {1} {2}", _change.field, _change.value.verb, 
+                             _change.value.item)
+                        </div>
+                        <div class="list-group-item-text">
+                            @string.Format("parent: {0}", 
+                                           string.IsNullOrEmpty(_change.value.parent_id)?
+                                                 _change.value.post_id:_change.value.parent_id)
+                        </div>
+                        <div class="list-group-item-text">
+                            @string.Format("sender: {0}", _change.value.sender_id)
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="list-group-item">
+                            @string.Format("field: {0}", _change.field)
+                        </div>
+                    }
+                }
+                <div class="list-group-item-text">
+                    <a href="@(string.Format("https://www.facebook.com/{0}", _entry.id))" 
+                       target="_blank">open in Facebook</a>
+                </div>
+            }
+            else if (_entry.changed_fields != null)
+            {
+                foreach (string _changedfield in _entry.changed_fields)
+                {
+                    <div class="list-group-item-text">
+                         @string.Format("{0} changed", _changedfield)
+                    </div>
+                }
+                <div class="list-group-item-text">
+                     <a href="@(string.Format("https://www.facebook.com/{0}", _entry.id))" 
+                        target="_blank">open in Facebook</a>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+}
+

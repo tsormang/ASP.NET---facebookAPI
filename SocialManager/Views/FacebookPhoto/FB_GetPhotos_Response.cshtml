@@ -1,0 +1,56 @@
+﻿@using SocialManager.Models
+@model IEnumerable<FacebookPhotoViewModel>
+<div class="container">
+    @for (int i = 0; i < Model.Count(); i+=3 )
+    {
+        FacebookPhotoViewModel item1 = null;
+        FacebookPhotoViewModel item2 = null;
+        FacebookPhotoViewModel item3 = null;
+        if (i < Model.Count())
+        {
+            item1 = Model.ElementAt(i);
+
+            if ((i + 1) < Model.Count())
+            {
+                item2 = Model.ElementAt(i + 1);
+
+                if ((i + 2) < Model.Count())
+                {
+                   item3 = Model.ElementAt(i + 2);
+                }
+            }
+        }
+
+        <div class="row table-striped">
+            <div class="col-md-4">              
+                    @if (item1 != null)
+                    {
+                        @Html.Partial("FB_Photo_Response", item1,
+                        new ViewDataDictionary{
+                        {"ToolTipPlacement","right"}})
+                    }
+            </div>
+            <div class="col-md-4">               
+                    @if (item2 != null)
+                    {
+                        @Html.Partial("FB_Photo_Response", item2,
+                        new ViewDataDictionary { 
+                        { "ToolTipPlacement", "right" } })
+                    }                      
+            </div>
+            <div class="col-md-4">               
+                    @if (item3 != null)
+                    {
+                        @Html.Partial("FB_Photo_Response", item3,
+                        new ViewDataDictionary { 
+                        { "ToolTipPlacement", "left" } })
+                    }                      
+            </div>
+        </div>
+    }
+</div>
+@if (ViewBag.ShowGetMoreData != null)
+{
+    <input id="FB_Next_PageLink" type="hidden" value="@ViewBag.ShowGetMoreData" />
+}
+<input id="FB_CurrentDataCount" type="hidden" value="@Model.Count()" />

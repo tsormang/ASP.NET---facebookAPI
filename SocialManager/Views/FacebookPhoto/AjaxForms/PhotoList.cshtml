@@ -1,0 +1,21 @@
+﻿@using (Ajax.BeginForm("GetPhotos", "FacebookPhoto",
+                            null,
+                            new
+                            {
+                                id = "Photo_Results_Form"
+                            }))
+{
+    <input id="AlbumId" name="AlbumId" type="hidden" />
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <label id="ShowingCountLabel"
+                   class="text-success">
+            </label>
+            <div id="FB_Scrollable_List"
+                 class="table-responsive bodycontainer scrollable">
+                <div id="Photo_Results"></div>
+                <div id="More_FB_Photos"></div>
+            </div>
+        </div>
+    </div>
+}

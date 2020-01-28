@@ -1,0 +1,59 @@
+﻿@model IEnumerable<SocialManager.Models.FacebookPageViewModel>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="height:300px; overflow:auto;">
+            <div class="table-responsive">
+                <table class="table table-condensed table-hover table-striped table-scrollable">
+                    <tr>
+                        <th></th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Likes)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.TalkingCount)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Published)
+                        </th>
+                    </tr>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <img id="Page_@item.Id" class="img-responsive hidden" 
+                                         src="~/images/updated-animated.gif" />
+                                </td>
+                                <td>
+                                    <a href="@item.PageURL" target="_blank" 
+                                       title="Click to Go to this Page...">
+                                    @Html.DisplayFor(modelItem => item.Name)</a>
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Likes)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TalkingCount)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Published)
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="4">
+                                @Model.Count() Pages
+                            </td>
+                        </tr>
+
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

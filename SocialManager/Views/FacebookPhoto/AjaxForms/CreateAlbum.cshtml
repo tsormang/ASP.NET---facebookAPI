@@ -1,0 +1,45 @@
+﻿@using (Ajax.BeginForm("CreateAlbum", "FacebookPhoto",
+                    null,
+                    new
+                    {
+                        id = "formNewAlbum"
+                    }))
+{
+    <div class="form-group">
+        <textarea name="NewAlbumName" id="NewAlbumName"
+               class="form-control"
+               rows="2"
+               placeholder="New Album Name"></textarea>
+        <input name="Privacy" type="hidden" value="EVERYONE" />
+        <div class="btn-group">
+            <button id="dropdownMenuPermission"
+                    class="btn dropdown-toggle btn-info"
+                    data-toggle="dropdown"
+                    type="button">
+                Public
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                       data-privacy="EVERYONE">Public</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                       data-privacy="ALL_FRIENDS">All Friends</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                       data-privacy="FRIENDS_OF_FRIENDS">Friends of Friends</a>
+                </li>
+                <li role="presentation">
+                    <a role="menuitem" tabindex="-1" href="#"
+                       data-privacy="SELF">Only Me</a>
+                </li>
+            </ul>
+        </div>
+        <button type="submit" class="btn btn-primary">
+            Add Album
+        </button>
+    </div>
+}

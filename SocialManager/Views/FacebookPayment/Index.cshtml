@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="content-type" content="application/xhtml+xml; charset=UTF-8" />
+    <title>My Sample Payment App</title>
+</head>
+<body>
+    <h1 id="fb-welcome"></h1>
+    <h2>Purchase a product:</h2>
+    <button id="pay">Buy Product</button>
+    <script type="text/javascript">
+        var _CurrentFB_AppId='@ViewBag.AppId';
+    </script>
+    @Scripts.Render("~/bundles/FacebookPaymentScripts")
+</body>
+</html>

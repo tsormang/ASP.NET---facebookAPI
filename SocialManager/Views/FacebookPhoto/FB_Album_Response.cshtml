@@ -1,0 +1,20 @@
+﻿@model SocialManager.Models.FacebookAlbumViewModel
+<div class="row">
+    <h3 class="text-primary">@Model.Name</h3>
+    <input name="AlbumId" type="hidden" value="@Model.Id" />
+</div>
+<div class="row">
+    <img class="img-thumbnail img-responsive img-album"
+         src="@Model.ImageURL" alt=""
+         data-toggle="tooltip"
+         data-placement="bottom"
+         title="Who can see this album? @Html.DisplayFor(modelItem => Model.Privacy)" />
+    <div class="carousel-caption">
+        <input type="hidden" id="AlbumCount_@Model.Id" value="@Model.count" /> 
+        <span class="text-muted" id="AlbumCaption_@(Model.Id)">
+        @Html.DisplayFor(modelItem => Model.count) 
+        @(Model.count > 1 ? "photos" : "photo")
+        </span>    
+    </div>  
+</div>
+

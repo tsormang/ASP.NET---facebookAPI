@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+<hr />
+
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-3">
+        @using (Ajax.BeginForm("Find", "FacebookSearch",
+                                new AjaxOptions
+                                {
+                                    OnFailure = "handleError(xhr,'Search_Results')",
+                                    HttpMethod = "Post",
+                                    UpdateTargetId = "Search_Results",
+                                    LoadingElementId = "divLoadingSearch",
+                                    OnSuccess = "CompleteLoadingPagedData"
+                                },
+                                new
+                                {
+                                    id = "Search_Results_Form"
+                                }))
+        {
+            <div class="input-group text-center">
+                <input type="text" class="form-control" placeholder="Search"
+                       name="QueryValue" onkeydown="
+                                if (event.keyCode == 13)
+                                    { return false; }" />
+                <div class="input-group-btn">
+                    <button class="btn btn-primary dropdown-toggle"
+                            data-toggle="dropdown"
+                            type="button"
+                            onclick="$('#Search_Results').empty();">
+                        Search
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" role="menu">
+                        <li><a href="#" onclick="SearchFormSubmitter('For People','user')">For People</a></li>
+                        <li><a href="#" onclick="SearchFormSubmitter('For Places','place')">For Places</a></li>
+                        <li><a href="#" onclick="SearchFormSubmitter('For Pages','page')">For Pages</a></li>
+                        <li><a href="#" onclick="SearchFormSubmitter('For Events','event')">For Events</a></li>
+                        <li><a href="#" onclick="SearchFormSubmitter('For Groups','group')">For Groups</a></li>
+                    </ul>
+
+                </div>
+                <input id="SearchBy" name="SearchBy" type="hidden" readonly />
+                <input id="SearchCenterCoordinates" name="SearchCenterCoordinates" type="hidden" readonly />
+            </div>
+        }
+    </div>
+    <div class="col-md-2">
+        <label id="SearchByLabel" class="text-info"></label>
+    </div>
+    <div class="col-md-3">
+        @using (Ajax.BeginForm("GeoCode", "FacebookSearch",
+                            new AjaxOptions
+                            {
+                                OnFailure = "handleError(xhr,'GeoCode_Results')",
+                                HttpMethod = "Post",
+                                UpdateTargetId = "GeoCode_Results",
+                                LoadingElementId = "divLoadingGeoCode"
+                            },
+                            new
+                            {
+                                id = "GeoCode_Results_Form"
+                            }))
+        {
+            <div class="input-group text-center">
+                <input type="text" class="form-control" placeholder="Location" name="LocationSearch" 
+                       onkeydown="if (event.keyCode == 13) { return false; } " />
+                <div class="input-group-btn">
+                    <button class="btn btn-primary" onclick="$('#GeoCode_Results').empty();
+                        $('#GeoCode_Results_Form').submit(); return false;">Geocode</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-2"></div>
+</div>
+
+<hr />
+<div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-4 text-center">
+        <div id="divLoadingSearch" 
+             style="display:none; z-index:1000; position:absolute;  
+              top:50%; left:50%; opacity:0.85;
+              -moz-opacity:0.85; filter:alpha(opacity=85); ">
+            <img src="~/images/loader.gif" />
+        </div>
+
+        <div id="FB_Scrollable_List" 
+             class="table-responsive 
+             bodycontainer scrollable">
+            <div id="Search_Results"></div>
+            <div id="More_FB_Data"></div>
+        </div>
+
+        
+        <label id="ShowingCountLabel" 
+               class="text-success">
+        </label>
+    </div>
+    <div class="col-md-6">
+        <div id="divLoadingGeoCode" style="display:none;">
+            <img src="~/images/loader.gif" />
+        </div>
+        <div id="GeoCode_Results"></div>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryval")   
+    @Scripts.Render("~/bundles/jqueryajax")
+    <script type="text/javascript">
+
+        var AllowGetMoreDataCall = true;
+        var ItemShowingCount = 0;
+
+        wireUpContinousScroll(
+        "divLoadingSearch",
+        "FacebookSearch/GetMoreData",
+        "More_FB_Data");
+
+        function SearchFormSubmitter(searchby, searchbyType) {
+            $("#SearchBy").val(searchbyType);
+            $("#SearchByLabel").html(searchby);
+            AllowGetMoreDataCall = false;
+            ItemShowingCount = 0;
+            $("#FB_Scrollable_List").scrollTop(0);
+            $("#More_FB_Data").empty();
+            $('#Search_Results_Form').submit();
+            return false;
+        }
+
+        
+
+        function CompleteLoadingPagedData()
+        {
+            AllowGetMoreDataCall = true;
+            ItemShowingCount = ItemShowingCount + parseInt($("#FB_CurrentDataCount").val());
+            $("#ShowingCountLabel").html("Showing " + ItemShowingCount + " items");
+        }
+    </script>
+
+}
+

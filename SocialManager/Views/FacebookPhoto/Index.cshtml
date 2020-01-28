@@ -1,0 +1,55 @@
+﻿@{
+    ViewBag.Title = "Photos";
+}
+<div class="row">
+    <div class="col-md-5">
+        <div class="well">
+            @{Html.RenderPartial("AjaxForms/CreateAlbum"); }
+        </div>
+    </div>
+    <div class="col-md-7">
+        <div class="well">
+            @{Html.RenderPartial("AjaxForms/AddPhoto");}
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        @{Html.RenderPartial("AjaxForms/AlbumList");}
+    </div>
+    <div class="col-md-7">
+        @{Html.RenderPartial("AjaxForms/PhotoList");}
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="Error_Results"></div>
+    </div>
+</div>
+
+@Html.Partial("AjaxForms/AlbumReload")
+<div id="PhotoPendingPostDialog"
+     class="modal fade fb-photopost-pending"
+     tabindex="-1"
+     role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                <span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">Photo Post Approval Pending</h4>
+            </div>
+            <div class="modal-body">
+                The photo has been uploaded to Facebook and it is awaiting an approval before it
+                 will be fully posted to the album. Please see this album within Facebook to grant 
+                approval.
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryajaxform")
+    @Scripts.Render("~/bundles/FacebookPhotoScripts")
+
+}

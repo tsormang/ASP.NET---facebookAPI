@@ -1,0 +1,8 @@
+﻿@using SocialManager.Extensions
+@model IEnumerable<string>
+<div class="list-group subscribing_field">
+    @foreach (string item in Model)
+    {
+       @Html.CheckboxListItem("SubscriptionField", item) 
+    }
+</div>

@@ -1,0 +1,39 @@
+﻿@using SocialManager.Models
+@model FacebookAddSubscriptionViewModel
+@{
+    ViewBag.Title = "Real Time Update Subscription";
+}
+<div class="row">
+    <div class="col-md-3">
+        <h4 class="text-center"><span class="text-info">Add a Subscription</span></h4>
+        @{Html.RenderPartial("AjaxForms/AddSubscription");}
+    </div>
+    <div class="col-md-5">
+        <h4 class="text-center"><span class="text-info">Active Subscriptions</span></h4>
+        @{Html.RenderPartial("AjaxForms/GetSubscription");}
+        @{Html.RenderPartial("AjaxForms/DeleteSubscription");}
+    </div>
+    <div class="col-md-4">
+        <h4 class="text-center"><span class="text-info">Notifications</span></h4>
+        <div class="panel-group" id="accordian_notifications" role="tablist"></div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="ErrorMessageDiv"></div>
+    </div>
+</div>
+<div id="UserSubscriptionFieldList" class="hidden">
+    @Html.Partial("SubscriptionFields", Model.UserSubscriptionFields)
+</div>
+<div id="PageSubscriptionFieldList" class="hidden">
+    @Html.Partial("SubscriptionFields", Model.PageSubscriptionFields)
+</div>
+<div id="PermissionSubscriptionFieldList" class="hidden">
+    @Html.Partial("SubscriptionFields", Model.PermissionSubscriptionFields)
+</div>
+
+@section Scripts {
+@Scripts.Render("~/bundles/jqueryajax")
+@Scripts.Render("~/bundles/FacebookSubscriptionScripts")
+}

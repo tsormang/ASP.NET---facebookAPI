@@ -1,0 +1,13 @@
+﻿@using SocialManager.Models;
+@model MessageViewModel
+@{
+    ViewBag.Title = Model.Type;
+}
+<h2 class="@(Model.Type == "Error" ? "text-danger" : "text-warning")">@Model.Type</h2>
+<div class="row">
+    <div class="col-xs-12">
+        <h4 class="@(Model.Type == "Error" ? "text-danger" : "text-warning")">@Model.Message</h4>
+    </div>
+</div>
+
+

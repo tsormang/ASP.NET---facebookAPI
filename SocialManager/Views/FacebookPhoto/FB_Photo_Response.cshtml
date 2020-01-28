@@ -1,0 +1,13 @@
+﻿@using SocialManager.Models
+@model FacebookPhotoViewModel
+<div class="panel panel-default btn-group-vertical">
+    <a href="http://www.facebook.com/@Model.Id" target="_blank">
+        <img class="img-thumbnail" src="@Model.SmallPicture"
+              data-toggle="tooltip" data-placement="@ViewData["ToolTipPlacement"]"
+              title="@Html.DisplayFor(modelItem => modelItem.name)" />
+    </a>
+    <button type="button"
+            class="btn glyphicon glyphicon-trash btn-link"
+            data-deleting-text="&nbsp;Deleteing..."
+            onclick="DeletePhoto('@Model.Id');"></button>
+</div>

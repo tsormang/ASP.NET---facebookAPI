@@ -1,0 +1,97 @@
+﻿@model IEnumerable<SocialManager.Models.FacebookPostViewModel>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" style="height:300px;">
+            <div class="table-responsive">
+                <div class="bodycontainer scrollable">
+                    <table class="table table-hover table-striped table-condensed table-scrollable">
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <a href="https://www.facebook.com/@item.From_Id" target="_blank" title="@item.From_Name">
+                                                    <img src="@item.From_Picture_Url" width="50" height="50" />
+                                                </a>
+                                            </div>
+                                            <div class="col-md-11">
+                                                @if (!string.IsNullOrEmpty(item.Message))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>@item.Message</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Story))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>@item.Story</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Picture_Url))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <a href="@item.Link" target="_blank"><img src="@item.Picture_Url" /></a>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Description))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>@item.Description</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if (!string.IsNullOrEmpty(item.Caption))
+                                                {
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <span>@item.Caption</span>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                <div class="row">
+                                                    <div class="col-md-4">
+                                                        <span class="text-muted">@item.Created_Time</span>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @if (item.Likes != null &&
+                                                                    item.Likes.Count > 1)
+                                                        {
+                                                            <span class="text-muted">@item.Likes[0].Count @(item.Likes[0].Count > 1 ? "Likes" : "Like")</span>
+                                                        }
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        @if (item.Comments != null &&
+                                                                    item.Comments.Count > 1)
+                                                        {
+                                                            <span class="text-muted">@item.Comments[0].Count @(item.Comments[0].Count > 1 ? "Comments" : "Comment")</span>
+                                                        }
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+                <table>
+                    <tfoot>
+                        @Model.Count() Posts
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+

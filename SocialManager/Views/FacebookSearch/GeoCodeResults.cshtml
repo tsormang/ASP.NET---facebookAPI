@@ -1,0 +1,80 @@
+﻿@model IEnumerable<SocialManager.Models.GeoCodeLocationViewModel>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12 text-primary">
+            @Html.DisplayNameFor(model => model.Name)
+        </div>
+    </div>
+    @foreach (var item in Model)
+    {
+        <div class="row table-striped">
+            <div class="col-md-12">
+                @Html.RadioButton("LocationCenter", item.Name,
+                                                                new
+                                                                {
+                                                                    onclick = "$('#SearchCenterCoordinates').val('" +
+                                                                        item.Coordinates + "');"
+                                                                })
+                @Html.DisplayFor(modelItem => item.Name)<br />
+                <span class="text-muted text-right">
+                    <small>
+                        (@Html.DisplayFor(modelItem => item.Coordinates))
+                    </small>
+                </span>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+            @Model.Count() locations
+        </div>
+    </div>
+</div>
+            @*<div class="row">
+                    <div class="col-md-12">
+                        <div class="table-responsive">
+                            <table>
+                                <tr>
+                                    <th>
+                                        @Html.DisplayNameFor(model => model.Name)
+                                    </th>
+                                </tr>
+                            </table>
+                            <div class="bodycontainer scrollable">
+                                <table class="table table-hover table-striped table-condensed table-scrollable">
+                                    <tbody>
+                                        @{
+                                            int idx = 0;
+                                        }
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.RadioButton("LocationCenter", item.Name,
+                                                                new
+                                                                {
+                                                                    onclick = "$('#SearchCenterCoordinates').val('" +
+                                                                        item.Coordinates + "');"
+                                                                })
+                                                    @Html.DisplayFor(modelItem => item.Name)<br />
+                                                    <span class="text-muted text-right">
+                                                        <small>
+                                                            (@Html.DisplayFor(modelItem => item.Coordinates))
+                                                        </small>
+                                                    </span>
+                                                </td>
+                                            </tr>
+                                            idx++;
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <table>
+                                <tfoot>
+                                    @Model.Count() locations
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+                </div>*@
+

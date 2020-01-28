@@ -1,0 +1,57 @@
+﻿@using (Ajax.BeginForm("Add", "FacebookSubscription", null,
+                new AjaxOptions
+                {
+                    OnFailure = "handleError(xhr,'ErrorMessageDiv')",
+                    HttpMethod = "Post",
+                    LoadingElementId = "divWaitImage",
+                    OnSuccess = "AddSubscriptionHandler(xhr)"
+                },
+                new
+                {
+                    id = "Add_Subscription_Form",
+                    @class = "form",role = "form"
+                }))
+{
+    <div id="divWaitImage" style="display:none;" class="text-center">
+        <img src="~/images/loader.gif" />
+    </div>
+    <div class="well">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group input-group">
+                    <div class="input-group">
+                        <div class="btn-group">
+                            <button id="dropdownMenuSubscription"
+                                    class="btn dropdown-toggle"
+                                    data-toggle="dropdown"
+                                    type="button">
+                                User
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#"
+                                       data-subscription="user">User</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#"
+                                       data-subscription="page">Page</a>
+                                </li>
+                                <li role="presentation">
+                                    <a role="menuitem" tabindex="-1" href="#"
+                                       data-subscription="permissions">Permissions</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <input name="subscription" type="hidden" value="user" />
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h6 class="text-center text-muted" id="SubscriptionFieldListTitle"></h6>
+            <div class="col-md-12 bodycontainer scrollable" id="SubscriptionFieldList"></div>
+        </div>
+    </div>
+}

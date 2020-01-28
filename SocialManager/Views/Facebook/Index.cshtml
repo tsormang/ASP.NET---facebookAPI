@@ -1,0 +1,206 @@
+﻿@using SocialManager.Models;
+@using SocialManager.Extensions;
+@model FacebookProfileViewModel
+
+@{
+    ViewBag.Title = "Profile";
+}
+<div class="row">
+    <div class="col-md-12">
+        <span>&nbsp;</span>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-2 text-center">
+        <a href="@Model.LinkURL" target="_blank">
+            <img class="img-rounded" src="@Model.ImageURL" alt="Profile Image goes here" />
+        </a>
+        <br />
+        <a href="@Model.LinkURL" target="_blank">@Model.Fullname Profile</a>
+    </div>
+    @using (Html.BeginForm("", "", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+    {
+        <div class="col-md-5">
+            <div class="form-group input-group-sm">
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.FirstName, new { @class = "control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.LastName, new { @class = "control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.LastName, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.email, new { @class = "control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.email, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.Location, new { @class = "control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.Location, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-md-5">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.Locale, new { @class = " control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.Locale, new { @class = "form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.birthdate, new { @class = " control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.birthdate, "{0:MMM-dd}", new { @class = " form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.age_range, new { @class = " control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.FB_AgeRangeFor(Model, (m => m.age_range), new { @class = " form-control", @readonly = true }) @*Using Custom TextBoxFor Extention called FB_AgeRange to format Facebook age_range JsonObject. See Extension HtmlHelper Class/*@
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.gender, new { @class = " control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.gender, new { @class = " form-control", @readonly = true })
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-right">
+                        @Html.LabelFor(m => m.Bio, new { @class = " control-label" })
+                    </div>
+                    <div class="col-xs-6">
+                        @Html.TextBoxFor(m => m.Bio, new { @class = " form-control", @readonly = true })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-3">
+        @using (Ajax.BeginForm("FB_TaggableFriends", "Facebook",
+                                    new AjaxOptions
+                                    {
+                                        OnFailure = "handleError(xhr,'Taggable_Friends')",
+                                        HttpMethod = "Get",
+                                        UpdateTargetId = "Taggable_Friends",
+                                        LoadingElementId = "divLoadingTaggableFriends"
+                                    },
+                                    new
+                                    {
+                                        id = "Taggable_Friends_Form"
+                                    }))
+        {
+            <div id="divLoadingTaggableFriends" style="display:none;">
+                <img src="~/images/loader.gif" />
+            </div>
+        }
+        <div id="Taggable_Friends"></div>
+    </div>
+    <div class="col-md-9">
+        <ul class="nav nav-tabs" id="myTab">
+            <li class="active"><a href="#pages" data-toggle="tab">Pages</a></li>
+            <li><a href="#posts" data-toggle="tab">Posts</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="pages">
+                @using (Ajax.BeginForm("FB_AdminPages", "Facebook",
+                                    new AjaxOptions
+                                    {
+                                        OnFailure = "handleError(xhr,'Admin_Pages')",
+                                        HttpMethod = "Get",
+                                        UpdateTargetId = "Admin_Pages",
+                                        LoadingElementId = "divLoadingAdminPages"
+                                    },
+                                    new
+                                    {
+                                        id = "Admin_Pages_Form"
+                                    }))
+                {
+                    <div id="divLoadingAdminPages" style="display:none;">
+                        <img src="~/images/loader.gif" />
+                    </div>
+
+                }
+                <div id="Admin_Pages"></div>
+            </div>
+            <div class="tab-pane" id="posts">
+                @using (Ajax.BeginForm("FB_GetFeed", "Facebook",
+                                new AjaxOptions
+                                {
+                                    OnFailure = "handleError(xhr,'PostResults')",
+                                    HttpMethod = "Get",
+                                    UpdateTargetId = "PostResults",
+                                    LoadingElementId = "divLoadingPosts"
+                                },
+                                new
+                                {
+                                    id = "Posts_Form"
+                                }))
+                {
+                    <div id="divLoadingPosts" style="display:none;">
+                        <img src="~/images/loader.gif" />
+                    </div>
+                }
+                <div id="PostResults"></div>
+            </div>
+        </div>
+    </div>
+</div>
+    @section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+        @Scripts.Render("~/bundles/jqueryajax")
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $("#Taggable_Friends_Form").submit();
+                $("#Admin_Pages_Form").submit();
+                $("#Posts_Form").submit();
+                function handleError(ajaxContext, UpdateTargetId) {
+                    if (ajaxContext != null &&
+                        ajaxContext.responseText != null) {
+                        $("#" + UpdateTargetId).html(ajaxContext.responseText);
+                    }
+                }
+
+		        if ($.connection != null)
+		            var notification = $.connection.notificationHub;
+		        if (notification != null) {
+		            //create a function that the hub can call back to display notifications
+		            notification.client.FBPageNotification = function (pageNotificationId) {
+		                $("#Page_" + pageNotificationId).removeClass("hidden");
+		            };
+		            $.connection.hub.start();
+		        }
+
+		        });
+        </script>
+
+    }
+
